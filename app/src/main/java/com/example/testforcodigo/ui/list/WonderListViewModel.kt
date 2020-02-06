@@ -1,4 +1,4 @@
-package com.example.testforcodigo.ui.main
+package com.example.testforcodigo.ui.list
 
 import android.app.Application
 import android.arch.lifecycle.LiveData
@@ -58,13 +58,14 @@ constructor(
                         wonders.value = response.wonders
                         loading.value = false
 
-                        for (wonder: Wonder in response.wonders!!) {
+                        for (i in response.wonders!!.indices) {
                             val data = WonderDbData()
-                            data.description = wonder.description
-                            data.image = wonder.image
-                            data.location = wonder.location
-                            data.lat = wonder.lat
-                            data.long = wonder.long
+                            data.id = i.toLong()
+                            data.description = response.wonders!![i].description
+                            data.image = response.wonders!![i].image
+                            data.location = response.wonders!![i].location
+                            data.lat = response.wonders!![i].lat
+                            data.long = response.wonders!![i].long
                             wonderDbRepository.insertWonder(data)
                         }
                     }
@@ -83,6 +84,7 @@ constructor(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ list ->
+                Log.d(TAG, Gson().toJson(list))
                 if (list.isEmpty()) {
                     loadWondersFromApi()
                 } else {

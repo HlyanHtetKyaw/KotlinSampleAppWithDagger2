@@ -1,4 +1,4 @@
-package com.example.testforcodigo.ui.main
+package com.example.testforcodigo.ui.list
 
 import android.app.Activity
 import android.support.v7.widget.AppCompatImageView

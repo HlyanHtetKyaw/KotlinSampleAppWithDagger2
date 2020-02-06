@@ -4,7 +4,7 @@ import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 
 import com.example.testforcodigo.di.util.ViewModelKey
-import com.example.testforcodigo.ui.main.WonderListViewModel
+import com.example.testforcodigo.ui.list.WonderListViewModel
 import com.example.testforcodigo.util.ViewModelFactory
 import dagger.Binds
 import dagger.Module
