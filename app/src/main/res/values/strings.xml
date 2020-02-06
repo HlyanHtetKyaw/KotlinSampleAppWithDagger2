@@ -2,7 +2,7 @@
     <string name="app_name">TestForCodigo</string>
     <string name="wonder_list">Wonder List</string>
     <string name="wonder_detail">Wonder Detail</string>
-    <string name="txt_error">Error while loading Wonder List.</string>
+    <string name="txt_error">Error while loading Wonder List.Check your internet connection and try again.</string>
     <string name="txt_name">GREAT WALL OF CHINA</string>
     <string name="txt_desc">he Great Wall of China is a series of fortifications made of stone, brick, tamped earth, wood, and other materials, generally built along an east-to-west line across the historical northern borders of China to protect the Chinese states and empires against the raids and invasions of the various nomadic groups of the Eurasian Steppe.</string>
 </resources>
