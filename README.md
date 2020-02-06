@@ -6,7 +6,7 @@ Using Technologies
 - Kotlin
 - Android Support Libraries
 - Lifecycle-aware components
-- Dagger2
+- Dagger
 - Room Database
 - MVVM Architecture
 - Retrofit
