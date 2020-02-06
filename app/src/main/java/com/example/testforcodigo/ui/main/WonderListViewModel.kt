@@ -15,7 +15,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
-import java.util.*
 import javax.inject.Inject
 
 
@@ -27,24 +26,15 @@ constructor(
 ) : ViewModel() {
     private var disposable: CompositeDisposable? = null
 
-    private val wonders = MutableLiveData<List<WonderDbData>>()
-    private val dbWonders = MutableLiveData<List<WonderDbData>>()
-    private val wonderLoadError = MutableLiveData<Boolean>()
+    private val wonders = MutableLiveData<List<Wonder>>()
+    private val error = MutableLiveData<Boolean>()
     private val loading = MutableLiveData<Boolean>()
-
-    private val wonderDbDataList = ArrayList<WonderDbData>()
-
-    internal val allwondersFromDB: LiveData<List<WonderDbData>>
-        get() = dbWonders
-
-    internal val error: LiveData<Boolean>
-        get() = wonderLoadError
 
     init {
         disposable = CompositeDisposable()
     }
 
-    internal fun getWonders(): LiveData<List<WonderDbData>> {
+    internal fun getWonders(): LiveData<List<Wonder>> {
         return wonders
     }
 
@@ -52,47 +42,38 @@ constructor(
         return loading
     }
 
-    fun fetchWonders() {
+    internal fun getError(): LiveData<Boolean> {
+        return error
+    }
+
+    fun fetchWondersFromApi() {
         loading.value = true
         disposable!!.add(
             apiRepository.getWonders().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribeWith(object :
                     DisposableSingleObserver<WonderResponse>() {
-                    override fun onSuccess(value: WonderResponse) {
-                        Log.d(TAG, "onSuccess: Response" + Gson().toJson(value))
-                        wonderLoadError.value = false
-                        for (response: Wonder in value.wonders!!) {
-                            val data = WonderDbData()
-                            // data.setId(response.getId())
-                            data.description = response.description
-                            data.image = response.image
-                            data.location = response.location
-                            data.lat = response.lat
-                            data.long = response.long
-                            wonderDbDataList.add(data)
-                        }
-
-                        wonders.value = wonderDbDataList
+                    override fun onSuccess(response: WonderResponse) {
+                        Log.d(TAG, "onSuccess: Response" + Gson().toJson(response))
+                        error.value = false
+                        wonders.value = response.wonders
                         loading.value = false
-                        for (wonderDbData in wonderDbDataList) {
-                            wonderDbRepository.insertWonder(wonderDbData)
+
+                        for (wonder: Wonder in response.wonders!!) {
+                            val data = WonderDbData()
+                            data.description = wonder.description
+                            data.image = wonder.image
+                            data.location = wonder.location
+                            data.lat = wonder.lat
+                            data.long = wonder.long
+                            wonderDbRepository.insertWonder(data)
                         }
                     }
 
                     override fun onError(e: Throwable) {
-                        wonderLoadError.value = true
-                        loading.value = false
+                        onErrorLoading(e)
                     }
                 })
         )
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        if (disposable != null) {
-            disposable!!.clear()
-            disposable = null
-        }
     }
 
 
@@ -105,23 +86,44 @@ constructor(
                 this.onAllWondersFetched(list)
             },
                 { error ->
-                    this.onError(error)
+                    onErrorLoading(error)
                 })
         disposable!!.add(usersDisposable)
     }
 
-    private fun onError(throwable: Throwable) {
+    private fun onErrorLoading(throwable: Throwable) {
+        error.value = true
+        loading.value = false
         Log.d(TAG, throwable.message)
     }
 
-    private fun onAllWondersFetched(wondderList: List<WonderDbData>) {
-        dbWonders.value = wondderList
+    private fun onAllWondersFetched(wonderList: List<WonderDbData>) {
+        val wonderResponse = ArrayList<Wonder>()
+
+        for (wonderDbData: WonderDbData in wonderList) {
+            val wonder = Wonder()
+            wonder.description = wonderDbData.description
+            wonder.image = wonderDbData.image
+            wonder.lat = wonderDbData.lat
+            wonder.location = wonderDbData.location
+            wonder.long = wonderDbData.long
+            wonderResponse.add(wonder)
+        }
+
+        wonders.value = wonderResponse
         loading.value = false
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        if (disposable != null) {
+            disposable!!.clear()
+            disposable = null
+        }
+    }
 
     companion object {
-        private val TAG = "UserListViewModel"
+        private const val TAG = "UserListViewModel"
     }
 
 
