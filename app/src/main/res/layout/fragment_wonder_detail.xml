@@ -43,4 +43,16 @@
         android:layout_margin="8dp"
         android:text="@string/txt_desc" />
 
+    <RelativeLayout
+        android:id="@+id/rl_map"
+        android:layout_width="match_parent"
+        android:layout_height="300dp">
+
+        <fragment
+            android:id="@+id/map_view"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="6dp" />
+    </RelativeLayout>
 </LinearLayout>
