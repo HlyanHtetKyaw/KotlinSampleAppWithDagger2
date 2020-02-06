@@ -13,10 +13,6 @@ constructor(private val wonderDao: WonderDao) {
         return wonderDao.getAllWonders()
     }
 
-    fun getWonderById(id: String): Single<WonderDbData> {
-        return wonderDao.getWonderById(id)
-    }
-
     fun insertWonder(wonderDbData: WonderDbData) {
         wonderDao.insert(wonderDbData)
     }

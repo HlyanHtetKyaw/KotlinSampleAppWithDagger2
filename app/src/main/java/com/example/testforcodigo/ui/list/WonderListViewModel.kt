@@ -80,7 +80,7 @@ constructor(
 
     fun loadWondersfromDB(context: Context?) {
         loading.value = true
-        val usersDisposable = wonderDbRepository.getAllWonders()
+        val wondersDisposable = wonderDbRepository.getAllWonders()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ list ->
@@ -98,7 +98,7 @@ constructor(
                 {
                     onErrorLoading()
                 })
-        disposable!!.add(usersDisposable)
+        disposable!!.add(wondersDisposable)
     }
 
     private fun onErrorLoading() {

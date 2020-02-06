@@ -12,11 +12,6 @@ interface WonderDao {
     @Query("SELECT * FROM wonder_table")
     fun getAllWonders(): Single<List<WonderDbData>>
 
-    // Select one wonder from user table by id
-    @Query("SELECT * FROM wonder_table WHERE id=:id")
-    fun getWonderById(id: String): Single<WonderDbData>
-
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(wonderDbData: WonderDbData)
 }
