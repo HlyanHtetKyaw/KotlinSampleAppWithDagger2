@@ -16,7 +16,10 @@ import javax.inject.Singleton
 
 
 @Singleton
-@Component(modules = [ContextModule::class, ApplicationModule::class, AndroidSupportInjectionModule::class, ActivityBindingModule::class, WonderDbModule::class])
+@Component(
+    modules = [ContextModule::class, ApplicationModule::class,
+        AndroidSupportInjectionModule::class, ActivityBindingModule::class, WonderDbModule::class]
+)
 interface ApplicationComponent : AndroidInjector<DaggerApplication> {
 
     fun inject(application: BaseApplication)

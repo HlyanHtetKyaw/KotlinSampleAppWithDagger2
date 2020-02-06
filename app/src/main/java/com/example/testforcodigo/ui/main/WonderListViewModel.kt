@@ -46,7 +46,7 @@ constructor(
         return error
     }
 
-    fun fetchWondersFromApi() {
+    fun loadWondersFromApi() {
         loading.value = true
         disposable!!.add(
             apiRepository.getWonders().subscribeOn(Schedulers.io())
@@ -77,13 +77,17 @@ constructor(
     }
 
 
-    fun loadAllWondersfromDB() {
+    fun loadWondersfromDB() {
         loading.value = true
         val usersDisposable = wonderDbRepository.getAllWonders()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ list ->
-                this.onAllWondersFetched(list)
+                if (list.isEmpty()) {
+                    loadWondersFromApi()
+                } else {
+                    this.onAllWondersFetched(list)
+                }
             },
                 { error ->
                     onErrorLoading(error)

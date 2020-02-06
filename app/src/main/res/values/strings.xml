@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">TestForCodigo</string>
     <string name="wonder_list">Wonder List</string>
+    <string name="txt_error">Error Loading List.</string>
+    <string name="txt_name">GREAT WALL OF CHINA</string>
 </resources>
