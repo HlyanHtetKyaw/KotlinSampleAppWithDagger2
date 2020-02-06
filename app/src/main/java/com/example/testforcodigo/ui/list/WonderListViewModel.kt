@@ -22,7 +22,6 @@ import javax.inject.Inject
 
 class WonderListViewModel @Inject
 constructor(
-    application: Application,
     private val apiRepository: ApiRepository,
     private val wonderDbRepository: WonderDbRepository
 ) : ViewModel() {

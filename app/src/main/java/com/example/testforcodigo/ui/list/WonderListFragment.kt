@@ -1,9 +1,9 @@
 package com.example.testforcodigo.ui.list
 
-import android.app.Activity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -26,7 +26,7 @@ class WonderListFragment : BaseFragment() {
         private var recyclerView: RecyclerView? = null
         private var tvError: TextView? = null
         private var wonderAdapter: WonderAdapter? = null
-        private var mActivity: Activity? = null
+        private var mActivity: AppCompatActivity? = null
         private var viewModel: WonderListViewModel? = null
 
     }
@@ -44,7 +44,7 @@ class WonderListFragment : BaseFragment() {
     }
 
     private fun initView() {
-        mActivity = activity
+        mActivity = activity as AppCompatActivity?
         recyclerView = mActivity!!.findViewById(R.id.recycler_view)
         tvError = mActivity!!.findViewById(R.id.tv_error)
         loadingView = mActivity!!.findViewById(R.id.loading_view)
@@ -52,13 +52,16 @@ class WonderListFragment : BaseFragment() {
         recyclerView!!.layoutManager = llm
         viewModel =
             ViewModelProviders.of(this, viewModelFactory).get(WonderListViewModel::class.java)
-        viewModel!!.getLoading().observe(this,
+        viewModel!!.getLoading().observe(
+            this,
             LoadingObserver()
         )
-        viewModel!!.getWonders().observe(this,
+        viewModel!!.getWonders().observe(
+            this,
             WonderObserver()
         )
-        viewModel!!.getError().observe(this,
+        viewModel!!.getError().observe(
+            this,
             ErrorObserver()
         )
         viewModel!!.loadWondersfromDB(context)

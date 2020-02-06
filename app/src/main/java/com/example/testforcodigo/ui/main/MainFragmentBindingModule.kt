@@ -9,6 +9,4 @@ abstract class MainFragmentBindingModule {
 
     @ContributesAndroidInjector
     internal abstract fun provideListFragment(): WonderListFragment
-
-
 }

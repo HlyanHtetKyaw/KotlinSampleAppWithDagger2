@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 
 import com.example.testforcodigo.di.util.ViewModelKey
+import com.example.testforcodigo.ui.detail.WonderDetailViewModel
 import com.example.testforcodigo.ui.list.WonderListViewModel
 import com.example.testforcodigo.util.ViewModelFactory
 import dagger.Binds
@@ -20,12 +21,12 @@ abstract class ViewModelModule {
     @ViewModelKey(WonderListViewModel::class)
     internal abstract fun bindListViewModel(wonderListViewModel: WonderListViewModel): ViewModel
 
-/*
+
     @Binds
     @IntoMap
     @ViewModelKey(WonderDetailViewModel::class)
     internal abstract fun bindDetailViewModel(wonderDetailViewModel: WonderDetailViewModel): ViewModel
-*/
+
 
     @Binds
     internal abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory

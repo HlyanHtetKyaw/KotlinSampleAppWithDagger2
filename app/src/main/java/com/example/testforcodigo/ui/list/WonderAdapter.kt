@@ -1,6 +1,8 @@
 package com.example.testforcodigo.ui.list
 
-import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.AppCompatImageView
 import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
@@ -12,14 +14,17 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.testforcodigo.R
 import com.example.testforcodigo.data.model.Wonder
+import com.example.testforcodigo.ui.detail.WonderDetailActivity
+import com.example.testforcodigo.util.Constants
+import com.google.gson.Gson
 
 
 class WonderAdapter(
-    activity: Activity,
+    activity: AppCompatActivity,
     wonderList: List<Wonder>
 ) : RecyclerView.Adapter<WonderAdapter.ViewHolder?>() {
     private val mItems: List<Wonder> = wonderList
-    private val activity: Activity = activity
+    private val activity: AppCompatActivity = activity
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View = LayoutInflater.from(parent.context)
@@ -34,6 +39,13 @@ class WonderAdapter(
             .dontAnimate().fitCenter().placeholder(R.drawable.ic_holder).error(R.drawable.ic_holder)
             .into(holder.ivWonder)
         holder.tvCardView.setOnClickListener(View.OnClickListener {
+            val prefs = activity.getSharedPreferences(Constants.APP_NAME, Context.MODE_PRIVATE)
+            val gSon = Gson()
+            val json = gSon.toJson(wonder)
+            prefs!!.edit().putString(Constants.WONDER_DETAIL, json).apply()
+            val intent = Intent(activity, WonderDetailActivity::class.java)
+            activity.startActivity(intent)
+
         })
     }
 
