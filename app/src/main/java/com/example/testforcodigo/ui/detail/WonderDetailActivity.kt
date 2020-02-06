@@ -26,6 +26,7 @@ class WonderDetailActivity : BaseActivity(), OnMapReadyCallback {
         private var tvTitle: TextView? = null
         private var tvDesc: TextView? = null
         private var ivWonder: AppCompatImageView? = null
+        private var ivBack: AppCompatImageView? = null
         private var viewModel: WonderDetailViewModel? = null
         private var mActivity: Activity? = null
         private var lattitude = 0.0
@@ -48,6 +49,7 @@ class WonderDetailActivity : BaseActivity(), OnMapReadyCallback {
         tvTitle = findViewById(R.id.tv_title)
         tvDesc = findViewById(R.id.tv_desc)
         ivWonder = findViewById(R.id.iv_wonder)
+        ivBack = findViewById(R.id.iv_back)
         mActivity = this
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map_view) as SupportMapFragment?
@@ -57,6 +59,8 @@ class WonderDetailActivity : BaseActivity(), OnMapReadyCallback {
             ViewModelProviders.of(this, viewModelFactory).get(WonderDetailViewModel::class.java)
         viewModel!!.getWonderDetail().observe(this, WonderDetailObserver())
         viewModel!!.loadWonderDetail(this)
+
+        ivBack!!.setOnClickListener { onBackPressed() }
     }
 
     private class WonderDetailObserver : Observer<Wonder?> {
@@ -86,6 +90,5 @@ class WonderDetailActivity : BaseActivity(), OnMapReadyCallback {
         )
         map.moveCamera(CameraUpdateFactory.newLatLng(latLng))
     }
-
 
 }

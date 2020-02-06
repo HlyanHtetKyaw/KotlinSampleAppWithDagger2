@@ -26,14 +26,18 @@
             android:value="AIzaSyDcHrzaabfldmrQF5zGKlvKi6rzcDczVIw" />
 
 
-        <activity android:name=".ui.main.MainActivity">
+        <activity
+            android:name=".ui.main.MainActivity"
+            android:configChanges="keyboardHidden|orientation">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.detail.WonderDetailActivity" />
+        <activity
+            android:name=".ui.detail.WonderDetailActivity"
+            android:configChanges="keyboardHidden|orientation" />
     </application>
 
 </manifest>
