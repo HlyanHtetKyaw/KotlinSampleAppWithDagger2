@@ -15,6 +15,7 @@ import com.example.testforcodigo.util.ViewModelFactory
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
@@ -48,6 +49,9 @@ class WonderDetailActivity : BaseActivity(), OnMapReadyCallback {
         tvDesc = findViewById(R.id.tv_desc)
         ivWonder = findViewById(R.id.iv_wonder)
         mActivity = this
+        val mapFragment = supportFragmentManager
+            .findFragmentById(R.id.map_view) as SupportMapFragment?
+        mapFragment!!.getMapAsync(this)
 
         viewModel =
             ViewModelProviders.of(this, viewModelFactory).get(WonderDetailViewModel::class.java)
