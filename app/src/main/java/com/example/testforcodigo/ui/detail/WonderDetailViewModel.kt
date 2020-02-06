@@ -1,7 +1,6 @@
 package com.example.testforcodigo.ui.detail
 
 import android.app.Activity
-import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.content.Context
@@ -19,7 +18,7 @@ constructor(
     private val wonderDetail = MutableLiveData<Wonder>()
 
 
-    internal fun getWonderDetail(): LiveData<Wonder> {
+    internal fun getWonderDetail(): MutableLiveData<Wonder> {
         return wonderDetail
     }
 
