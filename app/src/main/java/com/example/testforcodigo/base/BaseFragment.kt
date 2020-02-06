@@ -7,14 +7,10 @@ import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import butterknife.ButterKnife
-import butterknife.Unbinder
-
 import dagger.android.support.DaggerFragment
 
 abstract class BaseFragment : DaggerFragment() {
 
-    private var unBinder: Unbinder? = null
     private var baseActivity: AppCompatActivity? = null
 
     @LayoutRes
@@ -26,7 +22,6 @@ abstract class BaseFragment : DaggerFragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(layoutRes(), container, false)
-        unBinder = ButterKnife.bind(this, view)
         return view
     }
 
@@ -38,14 +33,6 @@ abstract class BaseFragment : DaggerFragment() {
     override fun onDetach() {
         super.onDetach()
         baseActivity = null
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        if (unBinder != null) {
-            unBinder!!.unbind()
-            unBinder = null
-        }
     }
 
 
