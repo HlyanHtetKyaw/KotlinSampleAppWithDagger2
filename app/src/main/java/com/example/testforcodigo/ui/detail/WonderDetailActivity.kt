@@ -12,15 +12,23 @@ import com.example.testforcodigo.R
 import com.example.testforcodigo.base.BaseActivity
 import com.example.testforcodigo.data.model.Wonder
 import com.example.testforcodigo.util.ViewModelFactory
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import javax.inject.Inject
 
-class WonderDetailActivity : BaseActivity() {
+class WonderDetailActivity : BaseActivity(), OnMapReadyCallback {
     companion object {
         private var tvTitle: TextView? = null
         private var tvDesc: TextView? = null
         private var ivWonder: AppCompatImageView? = null
         private var viewModel: WonderDetailViewModel? = null
         private var mActivity: Activity? = null
+        private var lattitude = 0.0
+        private var longtitude = 0.0
     }
 
     @Inject
@@ -57,7 +65,22 @@ class WonderDetailActivity : BaseActivity() {
                 .dontAnimate().fitCenter().placeholder(R.drawable.ic_holder)
                 .error(R.drawable.ic_holder)
                 .into(ivWonder!!)
+            lattitude = wonderDetail.lat!!.toDouble()
+            longtitude = wonderDetail.long!!.toDouble()
         }
+    }
+
+    override fun onMapReady(p0: GoogleMap?) {
+        val latLng =
+            LatLng(lattitude, longtitude)
+        val map: GoogleMap = p0!!
+        map.uiSettings.isMyLocationButtonEnabled = false
+        map.addMarker(
+            MarkerOptions()
+                .position(latLng)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_pin))
+        )
+        map.moveCamera(CameraUpdateFactory.newLatLng(latLng))
     }
 
 

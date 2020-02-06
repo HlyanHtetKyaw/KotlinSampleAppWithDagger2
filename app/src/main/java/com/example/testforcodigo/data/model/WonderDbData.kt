@@ -16,8 +16,8 @@ class WonderDbData {
 
     var image: String? = null
 
-    var lat: String? = null
+    var lattitude: String? = null
 
-    var long: String? = null
+    var longtitude: String? = null
 
 }

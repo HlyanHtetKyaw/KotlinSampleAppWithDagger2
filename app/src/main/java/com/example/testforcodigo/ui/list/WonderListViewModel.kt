@@ -1,6 +1,5 @@
 package com.example.testforcodigo.ui.list
 
-import android.app.Application
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
@@ -65,8 +64,8 @@ constructor(
                             data.description = response.wonders!![i].description
                             data.image = response.wonders!![i].image
                             data.location = response.wonders!![i].location
-                            data.lat = response.wonders!![i].lat
-                            data.long = response.wonders!![i].long
+                            data.lattitude = response.wonders!![i].lat
+                            data.longtitude = response.wonders!![i].long
                             wonderDbRepository.insertWonder(data)
                         }
                     }
@@ -114,9 +113,9 @@ constructor(
             val wonder = Wonder()
             wonder.description = wonderDbData.description
             wonder.image = wonderDbData.image
-            wonder.lat = wonderDbData.lat
+            wonder.lat = wonderDbData.lattitude
             wonder.location = wonderDbData.location
-            wonder.long = wonderDbData.long
+            wonder.long = wonderDbData.longtitude
             wonderResponse.add(wonder)
         }
 
