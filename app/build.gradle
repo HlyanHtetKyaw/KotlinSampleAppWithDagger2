@@ -54,6 +54,7 @@ dependencies {
     })
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
+    //noinspection GradleCompatible
     implementation "com.android.support:recyclerview-v7:$supportVersion"
     implementation "com.android.support:cardview-v7:$supportVersion"
     implementation "com.android.support:design:$supportVersion"
@@ -71,7 +72,7 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxandroid:$rxJavaVersion"
     implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
 
-    //dagger2
+    //dagger
     implementation "com.google.dagger:dagger:$daggerVersion"
     annotationProcessor "com.google.dagger:dagger-android-processor:$daggerVersion"
     kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
