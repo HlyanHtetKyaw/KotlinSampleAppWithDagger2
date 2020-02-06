@@ -21,8 +21,7 @@ abstract class BaseFragment : DaggerFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(layoutRes(), container, false)
-        return view
+        return inflater.inflate(layoutRes(), container, false)
     }
 
     override fun onAttach(context: Context) {

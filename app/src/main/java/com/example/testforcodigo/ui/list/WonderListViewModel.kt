@@ -24,8 +24,8 @@ constructor(
     private val apiRepository: ApiRepository,
     private val wonderDbRepository: WonderDbRepository
 ) : ViewModel() {
-    private var disposable: CompositeDisposable? = null
 
+    private var disposable: CompositeDisposable? = null
     private val wonders = MutableLiveData<List<Wonder>>()
     private val error = MutableLiveData<Boolean>()
     private val loading = MutableLiveData<Boolean>()
@@ -101,11 +101,6 @@ constructor(
         disposable!!.add(wondersDisposable)
     }
 
-    private fun onErrorLoading() {
-        error.value = true
-        loading.value = false
-    }
-
     private fun onAllWondersFetched(wonderList: List<WonderDbData>) {
         val wonderResponse = ArrayList<Wonder>()
 
@@ -120,6 +115,11 @@ constructor(
         }
 
         wonders.value = wonderResponse
+        loading.value = false
+    }
+
+    private fun onErrorLoading() {
+        error.value = true
         loading.value = false
     }
 

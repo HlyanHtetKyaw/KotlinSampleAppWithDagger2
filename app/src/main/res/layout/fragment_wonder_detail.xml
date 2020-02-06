@@ -30,7 +30,7 @@
             android:focusableInTouchMode="true"
             android:gravity="center"
             android:marqueeRepeatLimit="marquee_forever"
-            android:paddingLeft="-30dp"
+            android:paddingStart="-30dp"
             android:scrollHorizontally="true"
             android:singleLine="true"
             android:text="@string/wonder_detail"

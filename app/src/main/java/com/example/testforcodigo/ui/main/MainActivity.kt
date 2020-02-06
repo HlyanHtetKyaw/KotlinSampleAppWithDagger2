@@ -13,7 +13,8 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction().add(R.id.id_container,
+            supportFragmentManager.beginTransaction().add(
+                R.id.id_container,
                 WonderListFragment()
             ).commit()
         }

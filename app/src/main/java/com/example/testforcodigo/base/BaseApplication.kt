@@ -7,11 +7,7 @@ import dagger.android.DaggerApplication
 
 class BaseApplication : DaggerApplication() {
 
-    override fun onCreate() {
-        super.onCreate()
-    }
-
-    protected override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
+    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
         val component = DaggerApplicationComponent.builder().application(this).build()
         component.inject(this)
 
