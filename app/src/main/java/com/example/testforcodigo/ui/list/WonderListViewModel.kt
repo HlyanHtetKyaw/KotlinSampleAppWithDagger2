@@ -4,12 +4,14 @@ import android.app.Application
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import android.content.Context
 import android.util.Log
 import com.example.testforcodigo.data.database.WonderDbRepository
 import com.example.testforcodigo.data.model.Wonder
 import com.example.testforcodigo.data.model.WonderDbData
 import com.example.testforcodigo.data.model.WonderResponse
 import com.example.testforcodigo.data.rest.ApiRepository
+import com.example.testforcodigo.util.MainUtils
 import com.google.gson.Gson
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -71,14 +73,14 @@ constructor(
                     }
 
                     override fun onError(e: Throwable) {
-                        onErrorLoading(e)
+                        onErrorLoading()
                     }
                 })
         )
     }
 
 
-    fun loadWondersfromDB() {
+    fun loadWondersfromDB(context: Context?) {
         loading.value = true
         val usersDisposable = wonderDbRepository.getAllWonders()
             .subscribeOn(Schedulers.io())
@@ -86,21 +88,24 @@ constructor(
             .subscribe({ list ->
                 Log.d(TAG, Gson().toJson(list))
                 if (list.isEmpty()) {
-                    loadWondersFromApi()
+                    if (MainUtils.isNetworkAvailable(context!!)) {
+                        loadWondersFromApi()
+                    } else {
+                        onErrorLoading()
+                    }
                 } else {
                     this.onAllWondersFetched(list)
                 }
             },
-                { error ->
-                    onErrorLoading(error)
+                {
+                    onErrorLoading()
                 })
         disposable!!.add(usersDisposable)
     }
 
-    private fun onErrorLoading(throwable: Throwable) {
+    private fun onErrorLoading() {
         error.value = true
         loading.value = false
-        Log.d(TAG, throwable.message)
     }
 
     private fun onAllWondersFetched(wonderList: List<WonderDbData>) {

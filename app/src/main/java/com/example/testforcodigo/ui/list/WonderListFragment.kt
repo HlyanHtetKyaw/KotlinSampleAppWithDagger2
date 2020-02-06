@@ -61,7 +61,7 @@ class WonderListFragment : BaseFragment() {
         viewModel!!.getError().observe(this,
             ErrorObserver()
         )
-        viewModel!!.loadWondersfromDB()
+        viewModel!!.loadWondersfromDB(context)
     }
 
     private class WonderObserver : Observer<List<Wonder>?> {
